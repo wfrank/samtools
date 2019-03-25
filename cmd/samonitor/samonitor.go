@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -12,8 +13,8 @@ import (
 
 func main() {
 
-	hosts := flag.String("hosts", os.Getenv("ISAM_HOSTS"), "Comma seperated ISAM hosts to monitor")
-	user := flag.String("user", os.Getenv("ISAM_USER"), "Username with monitor privillage")
+	hosts := flag.String("hosts", os.Getenv("ISAM_HOSTS"), "Comma separated ISAM hosts to monitor")
+	user := flag.String("user", os.Getenv("ISAM_USER"), "Username with monitor privilege")
 	pass := flag.String("pass", os.Getenv("ISAM_PASS"), "Password of the User")
 
 	flag.Parse()
@@ -34,7 +35,7 @@ func main() {
 				log.Printf("error polling system stats from %s: %v", host, err)
 				return
 			}
-			log.Printf("%s: %+v", host, *stats)
+			fmt.Printf("%s: %+v\n", host, *stats)
 		}(host)
 	}
 	wg.Wait()
